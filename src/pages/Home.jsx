@@ -4,9 +4,7 @@ import Hero from '../components/Hero.jsx';
 import Stats from '../components/Stats.jsx';
 import About from '../components/About.jsx';
 import IndicatorCatalog from '../components/IndicatorCatalog.jsx';
-import FAQ from '../components/FAQ.jsx';
-import CTABanner from '../components/CTABanner.jsx';
-import Contact from '../components/Contact.jsx';
+import Downloads from '../components/Downloads.jsx';
 import Footer from '../components/Footer.jsx';
 
 export default function Home() {
@@ -18,9 +16,7 @@ export default function Home() {
         <Stats />
         <About />
         <IndicatorCatalog />
-        <FAQ />
-        <CTABanner />
-        <Contact />
+        <Downloads />
       </main>
       <Footer />
     </>

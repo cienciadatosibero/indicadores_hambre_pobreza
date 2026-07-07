@@ -1,13 +1,13 @@
 // frontend/src/components/admin/ColumnTypePicker.jsx
 const TIPOS = ['INT', 'DECIMAL', 'VARCHAR', 'TEXT', 'DATE', 'BOOLEAN'];
 
-// columnas: [{ original, safe, tipo, esId }]
+// columnas: [{ original, safe, tipo, esId, etiqueta }]
 export default function ColumnTypePicker({ columnas, setColumnas }) {
-  function setTipo(safe, tipo) {
-    setColumnas(columnas.map((c) => (c.safe === safe ? { ...c, tipo } : c)));
+  function setCampo(safe, campo, valor) {
+    setColumnas(columnas.map((c) => (c.safe === safe ? { ...c, [campo]: valor } : c)));
   }
-  function setId(safe) {
-    setColumnas(columnas.map((c) => ({ ...c, esId: c.safe === safe })));
+  function toggleId(safe) {
+    setColumnas(columnas.map((c) => (c.safe === safe ? { ...c, esId: !c.esId } : c)));
   }
 
   return (
@@ -17,19 +17,28 @@ export default function ColumnTypePicker({ columnas, setColumnas }) {
           <tr>
             <th className="px-4 py-3 text-left font-semibold">Columna (original)</th>
             <th className="px-4 py-3 text-left font-semibold">Nombre en BD</th>
+            <th className="px-4 py-3 text-left font-semibold">Texto legible (etiqueta)</th>
             <th className="px-4 py-3 text-left font-semibold">Tipo de dato</th>
-            <th className="px-4 py-3 text-center font-semibold">Es ID (PK)</th>
+            <th className="px-4 py-3 text-center font-semibold">Clave primaria (PK)</th>
           </tr>
         </thead>
         <tbody>
           {columnas.map((c) => (
             <tr key={c.safe} className="border-t border-neutral-200">
-              <td className="px-4 py-3 text-neutral-ink">{c.original}</td>
+              <td className="px-4 py-3 text-neutral-ink whitespace-nowrap">{c.original}</td>
               <td className="px-4 py-3 font-mono text-xs text-neutral-text">{c.safe}</td>
+              <td className="px-4 py-3">
+                <input
+                  value={c.etiqueta ?? c.original}
+                  onChange={(e) => setCampo(c.safe, 'etiqueta', e.target.value)}
+                  placeholder="Ej. Población 2020"
+                  className="w-56 rounded-lg border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary focus:outline-none"
+                />
+              </td>
               <td className="px-4 py-3">
                 <select
                   value={c.tipo}
-                  onChange={(e) => setTipo(c.safe, e.target.value)}
+                  onChange={(e) => setCampo(c.safe, 'tipo', e.target.value)}
                   className="rounded-lg border border-neutral-300 px-2 py-1.5 text-sm focus:border-primary focus:outline-none"
                 >
                   {TIPOS.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -37,10 +46,9 @@ export default function ColumnTypePicker({ columnas, setColumnas }) {
               </td>
               <td className="px-4 py-3 text-center">
                 <input
-                  type="radio"
-                  name="idCol"
+                  type="checkbox"
                   checked={!!c.esId}
-                  onChange={() => setId(c.safe)}
+                  onChange={() => toggleId(c.safe)}
                   className="accent-primary h-4 w-4"
                 />
               </td>

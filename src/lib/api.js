@@ -27,9 +27,14 @@ async function request(path, { method = 'GET', body, auth = false, isForm = fals
 export const api = {
   login: (usuario, password) => request('/auth/login', { method: 'POST', body: { usuario, password } }),
   indicadores: () => request('/indicadores'),
-  datosMapa: (tabla) => request(`/indicadores/${tabla}`),
+  datosMapa: (tabla, variable) =>
+    request(`/indicadores/${tabla}${variable ? `?variable=${encodeURIComponent(variable)}` : ''}`),
   analytics: (tabla) => request(`/analytics/${tabla}`),
   contacto: (data) => request('/contacto', { method: 'POST', body: data }),
+
+  // descargas publicas (regresan la URL directa, el navegador maneja el archivo)
+  urlDescargaIndicador: (tabla) => `${BASE}/indicadores/${tabla}/descarga`,
+  urlDescargaCatalogo: () => `${BASE}/catalogo/municipios/descarga`,
 
   // admin
   adminTablas: () => request('/admin/tablas', { auth: true }),
@@ -45,6 +50,11 @@ export const api = {
     const qs = p.toString();
     return request(`/admin/municipios${qs ? `?${qs}` : ''}`, { auth: true });
   },
+  adminVariablesGet: (tabla) => request(`/admin/variables/${tabla}`, { auth: true }),
+  adminVariablesSave: (tabla, variables) => request(`/admin/variables/${tabla}`, { method: 'PUT', body: { variables }, auth: true }),
+  adminRenombrarEstado: (cve, nom) => request(`/admin/estados/${cve}`, { method: 'PUT', body: { nom_ent: nom }, auth: true }),
+  catalogoEstados: () => request('/catalogo/estados'),
+  catalogoMunicipiosTodos: () => request('/catalogo/municipios/todos'),
   adminEliminarTabla: (nombre) => request(`/admin/tablas/${nombre}`, { method: 'DELETE', auth: true }),
   adminGuardarConfig: (data) => request('/admin/indicadores/config', { method: 'POST', body: data, auth: true }),
   adminPreview: (formData) => request('/admin/upload/preview', { method: 'POST', body: formData, auth: true, isForm: true }),

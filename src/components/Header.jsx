@@ -1,21 +1,18 @@
 // frontend/src/components/Header.jsx
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, X, BarChart3 } from 'lucide-react';
-import Button from './ui/Button.jsx';
 
 const NAV = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Acerca de', href: '#acerca' },
   { label: 'Indicadores', href: '#indicadores' },
-  { label: 'Recursos', href: '#recursos' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Descargas', href: '#descargas' },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -44,10 +41,6 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:block">
-            <Button variant="outline" onClick={() => navigate('/admin')}>Admin</Button>
-          </div>
-
           <button className="md:hidden text-neutral-ink" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -61,9 +54,6 @@ export default function Header() {
               {n.label}
             </a>
           ))}
-          <button onClick={() => navigate('/admin')} className="block w-full text-left text-primary font-semibold">
-            Admin
-          </button>
         </div>
       )}
     </header>

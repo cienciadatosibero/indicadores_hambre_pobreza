@@ -8,11 +8,13 @@ import TablesManager from '../components/admin/TablesManager.jsx';
 import IndicatorConfig from '../components/admin/IndicatorConfig.jsx';
 import MessagesInbox from '../components/admin/MessagesInbox.jsx';
 import MunicipiosCatalog from '../components/admin/MunicipiosCatalog.jsx';
+import VariablesConfig from '../components/admin/VariablesConfig.jsx';
 import { getToken } from '../lib/api.js';
 
 const TABS = [
   { id: 'upload', label: 'Cargar datos', icon: Upload },
   { id: 'tablas', label: 'Tablas', icon: Database },
+  { id: 'variables', label: 'Variables', icon: BarChart3 },
   { id: 'config', label: 'Indicadores', icon: Settings },
   { id: 'mensajes', label: 'Mensajes', icon: Mail },
   { id: 'municipios', label: 'Municipios', icon: MapPin },
@@ -75,6 +77,7 @@ export default function AdminDashboard() {
           {tab === 'config' && <IndicatorConfig refreshKey={refreshKey} onSaved={bump} />}
           {tab === 'mensajes' && <MessagesInbox />}
           {tab === 'municipios' && <MunicipiosCatalog />}
+          {tab === 'variables' && <VariablesConfig />}
         </div>
       </div>
     </div>

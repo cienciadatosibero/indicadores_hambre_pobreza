@@ -23,7 +23,7 @@ export default function Footer() {
             <li><a href="#inicio" className="hover:text-primary-light">Inicio</a></li>
             <li><a href="#acerca" className="hover:text-primary-light">Acerca de</a></li>
             <li><a href="#indicadores" className="hover:text-primary-light">Indicadores</a></li>
-            <li><a href="#contacto" className="hover:text-primary-light">Contacto</a></li>
+            <li><a href="#descargas" className="hover:text-primary-light">Descargas</a></li>
           </ul>
         </div>
 
